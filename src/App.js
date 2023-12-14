@@ -1,11 +1,15 @@
 import React from 'react';
-import { Container, Box } from '@mui/material';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Navbar from './components/Navbar';
 import Chat from './components/Chat';
 import SendMessage from './components/SendMessage';
+import Box from '@mui/material/Box';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase';
+import SignUp from './components/SignUp';
+import Signin from './components/Singin';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -41,16 +45,34 @@ function App() {
   const [user] = useAuthState(auth);
 
   return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={user ? <Home /> : <SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+const Home = () => {
+  const [user] = useAuthState(auth);
+
+  if (!user) {
+    return <SignUp />; 
+  }
+
+  return (
     <StyledContainer>
       <Navbar />
       <Box
         sx={{
           width: '100%',
-          flex: 1, 
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
           padding: 0,
-          overflow: 'hidden', 
+          overflow: 'hidden',
         }}
       >
         <Chat />
@@ -58,6 +80,6 @@ function App() {
       </Box>
     </StyledContainer>
   );
-}
+};
 
 export default App;

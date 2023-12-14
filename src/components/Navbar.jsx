@@ -3,10 +3,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar'; 
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import Signin from './Signin';
-import Logout from './Logout';
 import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Logout from './Logout';
 
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -23,7 +22,7 @@ const Navbar = () => {
       <Typography variant="h3" fontSize={'2.5rem'} fontFamily={"Roboto"} sx={{ pl: 3, filter: 'drop-shadow(7px 7px 3px #000)' }}>
           Chat App
         </Typography>
-        {user ? <Logout /> : <Signin />}
+        <Logout/>
       </Toolbar>
     </StyledAppBar>
   );
